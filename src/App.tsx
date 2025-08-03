@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Phone, Linkedin, Github, ExternalLink, Code, ChevronDown } from 'lucide-react';
+import { Mail, Phone, Linkedin, ExternalLink, Code, ChevronDown } from 'lucide-react';
 import './App.css';
 
 interface Language {
@@ -220,7 +220,7 @@ function App() {
             <div className="photo-container">
               <div className="photo-wrapper">
                 <img 
-                  src="/public/WhatsApp Image 2025-08-02 at 15.39.10.jpeg" 
+                  src="/EduardoPiazza.jpeg" 
                   alt="Eduardo Piazza" 
                   className="profile-photo"
                 />
