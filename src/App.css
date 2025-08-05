@@ -97,20 +97,19 @@ body {
 .logo-text {
   font-size: 2.5rem;
   font-weight: 900;
-  font-family: 'Courier New', monospace;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   background: linear-gradient(45deg, var(--primary-red), var(--secondary-red));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   position: relative;
   text-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
-  letter-spacing: 2px;
-  transform: skew(-5deg);
+  letter-spacing: 1px;
   transition: all 0.3s ease;
 }
 
 .logo-text:hover {
-  transform: skew(-5deg) scale(1.1);
+  transform: scale(1.1);
   filter: drop-shadow(0 0 15px var(--secondary-red));
 }
 
@@ -1072,11 +1071,42 @@ body {
   justify-content: center;
 }
 
+.nft-background-code {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.code-line {
+  position: absolute;
+  color: #ff0000;
+  font-family: 'Courier New', monospace;
+  line-height: 1.2;
+  animation: codeFloat 6s ease-in-out infinite;
+  text-shadow: 0 0 5px rgba(255, 0, 0, 0.3);
+}
+
+@keyframes codeFloat {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg); 
+    opacity: 0.2;
+  }
+  50% { 
+    transform: translateY(-3px) rotate(1deg); 
+    opacity: 0.4;
+  }
+}
+
 .nft-character {
   position: relative;
   width: 200px;
   height: 280px;
   transform: scale(0.8);
+  z-index: 2;
 }
 
 .nft-head {

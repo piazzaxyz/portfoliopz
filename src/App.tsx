@@ -126,6 +126,35 @@ const projects = [
 const NFTAvatar = () => {
   return (
     <div className="nft-avatar">
+      {/* Background code elements */}
+      <div className="nft-background-code">
+        <div className="code-line" style={{ top: '10%', left: '5%', fontSize: '8px', opacity: 0.3 }}>
+          const dev = {'{'}<br />
+          &nbsp;&nbsp;name: "PZ"<br />
+          {'}'};
+        </div>
+        <div className="code-line" style={{ top: '20%', right: '5%', fontSize: '6px', opacity: 0.2 }}>
+          function code() {'{'}<br />
+          &nbsp;&nbsp;return "PZ";<br />
+          {'}'}
+        </div>
+        <div className="code-line" style={{ bottom: '15%', left: '8%', fontSize: '7px', opacity: 0.25 }}>
+          &lt;PZ /&gt;
+        </div>
+        <div className="code-line" style={{ top: '60%', right: '8%', fontSize: '9px', opacity: 0.3, fontWeight: 'bold' }}>
+          PZ
+        </div>
+        <div className="code-line" style={{ top: '40%', left: '10%', fontSize: '6px', opacity: 0.2 }}>
+          console.log("PZ");
+        </div>
+        <div className="code-line" style={{ bottom: '40%', right: '12%', fontSize: '8px', opacity: 0.25 }}>
+          #PZ {'{'} color: red; {'}'}
+        </div>
+        <div className="code-line" style={{ top: '80%', left: '15%', fontSize: '10px', opacity: 0.35, color: '#ff6666' }}>
+          PZ
+        </div>
+      </div>
+      
       <div className="nft-character">
         <div className="nft-head">
           <div className="nft-hair"></div>
@@ -186,10 +215,12 @@ function App() {
     const email = formData.get('email');
     const message = formData.get('message');
     
-    const subject = encodeURIComponent(`Contato do Portfolio - ${name}`);
-    const body = encodeURIComponent(`Nome: ${name}\nEmail: ${email}\n\nMensagem:\n${message}`);
+    // Criar o corpo do email com quebras de linha adequadas
+    const emailBody = `Nome: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMensagem:%0D%0A${message}`;
+    const subject = `Contato do Portfolio - ${name}`;
     
-    window.open(`mailto:dudupiazza16@gmail.com?subject=${subject}&body=${body}`);
+    // Usar window.location.href para melhor compatibilidade
+    window.location.href = `mailto:dudupiazza16@gmail.com?subject=${encodeURIComponent(subject)}&body=${emailBody}`;
   };
 
   const openWhatsApp = () => {
