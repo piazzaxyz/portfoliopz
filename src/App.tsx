@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Phone, Linkedin, ExternalLink, Code, ChevronDown } from 'lucide-react';
+import { Mail, Phone, Linkedin, ExternalLink, Code, ChevronDown, Github, Construction } from 'lucide-react';
 import './App.css';
 
 interface Language {
@@ -93,7 +93,7 @@ const timelineData = [
     year: '2025',
     title: 'timeline2023Alura',
     description: 'timeline2023AluraDesc',
-    tech: ['HTML', 'CSS', 'JavaScript, Java, Git']
+    tech: ['HTML', 'CSS', 'JavaScript', 'Java', 'Git']
   },
   {
     year: '2025',
@@ -113,14 +113,44 @@ const projects = [
     codeUrl: '#'
   },
   {
-    title: 'studyProjects',
-    description: 'studyDesc',
-    tech: ['Node.js', 'React', 'TypeScript'],
+    title: 'Amostra de Loja',
+    description: 'Projeto de e-commerce em desenvolvimento com funcionalidades modernas',
+    tech: ['React', 'Node.js', 'TypeScript', 'Stripe'],
     image: 'https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=800',
-    liveUrl: '#',
-    codeUrl: '#'
+    liveUrl: null,
+    codeUrl: 'https://github.com/piazzaxyz',
+    inConstruction: true
   }
 ];
+
+const NFTAvatar = () => {
+  return (
+    <div className="nft-avatar">
+      <div className="nft-character">
+        <div className="nft-head">
+          <div className="nft-hair"></div>
+          <div className="nft-eyes">
+            <div className="nft-eye left"></div>
+            <div className="nft-eye right"></div>
+          </div>
+        </div>
+        <div className="nft-suit">
+          <div className="nft-tie"></div>
+        </div>
+      </div>
+      <div className="nft-code">
+        const dev = {'{'}
+        <br />
+        &nbsp;&nbsp;name: "PZ",
+        <br />
+        &nbsp;&nbsp;level: 99
+        <br />
+        {'}'};
+      </div>
+      <div className="nft-effects"></div>
+    </div>
+  );
+};
 
 function App() {
   const [currentLang, setCurrentLang] = useState<'pt' | 'en'>('pt');
@@ -197,8 +227,14 @@ function App() {
 
           <div className="header-actions">
             <button className="lang-toggle" onClick={toggleLanguage}>
-              <span className={`flag ${currentLang === 'pt' ? 'active' : ''}`}>🇧🇷</span>
-              <span className={`flag ${currentLang === 'en' ? 'active' : ''}`}>🇺🇸</span>
+              <div className={`flag-container ${currentLang === 'pt' ? 'active' : ''}`}>
+                <span className="flag">🇧🇷</span>
+                <span className="flag-text">BR</span>
+              </div>
+              <div className={`flag-container ${currentLang === 'en' ? 'active' : ''}`}>
+                <span className="flag">🇺🇸</span>
+                <span className="flag-text">US</span>
+              </div>
             </button>
             
             <button 
@@ -224,7 +260,9 @@ function App() {
                   alt="Eduardo Piazza" 
                   className="profile-photo"
                 />
-                <div className="photo-effects"></div>
+                <div className="nft-photo">
+                  <NFTAvatar />
+                </div>
               </div>
             </div>
             
@@ -321,20 +359,34 @@ function App() {
                 <div className="project-image">
                   <img src={project.image} alt={t(project.title)} />
                   <div className="project-overlay">
-                    <button className="project-btn live-btn">
-                      <ExternalLink size={16} />
-                      {t('viewLive')}
-                    </button>
-                    <button className="project-btn code-btn">
+                    {project.liveUrl && (
+                      <a href={project.liveUrl} className="project-btn live-btn" target="_blank" rel="noopener noreferrer">
+                        <ExternalLink size={16} />
+                        {t('viewLive')}
+                      </a>
+                    )}
+                    <a href={project.codeUrl} className="project-btn code-btn" target="_blank" rel="noopener noreferrer">
                       <Code size={16} />
                       {t('viewCode')}
-                    </button>
+                    </a>
                   </div>
                 </div>
                 
                 <div className="project-info">
                   <h3>{t(project.title)}</h3>
+                  {project.inConstruction && (
+                    <div className="construction-badge">
+                      <Construction size={16} />
+                      Em construção
+                    </div>
+                  )}
                   <p>{t(project.description)}</p>
+                  {project.inConstruction && (
+                    <a href="https://github.com/piazzaxyz" target="_blank" rel="noopener noreferrer" className="github-link">
+                      <Github size={16} />
+                      Verificar progresso no GitHub
+                    </a>
+                  )}
                   <div className="project-tech">
                     {project.tech.map((tech) => (
                       <span key={tech} className="tech-tag">{tech}</span>
@@ -369,6 +421,13 @@ function App() {
                 <Linkedin className="contact-icon" />
                 <a href="https://linkedin.com/in/eduardo-siqueira-de-melo-piazza-08b1b42b3" target="_blank" rel="noopener noreferrer">
                   LinkedIn
+                </a>
+              </div>
+              
+              <div className="contact-item">
+                <Github className="contact-icon" />
+                <a href="https://github.com/piazzaxyz" target="_blank" rel="noopener noreferrer">
+                  GitHub
                 </a>
               </div>
             </div>
@@ -414,7 +473,7 @@ function App() {
       {/* Footer */}
       <footer className="footer">
         <div className="container">
-          <p>&copy; 2024 Eduardo Piazza. Todos os direitos reservados.</p>
+          <p>&copy; 2025 Eduardo Piazza. Todos os direitos reservados.</p>
         </div>
       </footer>
     </div>
