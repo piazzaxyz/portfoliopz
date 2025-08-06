@@ -225,18 +225,18 @@ function App() {
     const email = formData.get('email');
     const message = formData.get('message');
     
-    // Criar assunto e corpo do email formatados profissionalmente
+    // Criar assunto e corpo do email formatados para Gmail web
     const subject = currentLang === 'pt' 
       ? `Contato Profissional - ${name}` 
       : `Professional Contact - ${name}`;
     
     const emailBody = currentLang === 'pt'
-      ? `Olá Eduardo,%0D%0A%0D%0AMeu nome é ${name} e gostaria de entrar em contato com você.%0D%0A%0D%0ADetalhes do contato:%0D%0ANome: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMensagem:%0D%0A${message}%0D%0A%0D%0AAtenciosamente,%0D%0A${name}`
-      : `Hello Eduardo,%0D%0A%0D%0AMy name is ${name} and I would like to get in touch with you.%0D%0A%0D%0AContact details:%0D%0AName: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}%0D%0A%0D%0ABest regards,%0D%0A${name}`;
+      ? `Olá Eduardo,\n\nMeu nome é ${name} e gostaria de entrar em contato com você.\n\nDetalhes do contato:\nNome: ${name}\nEmail: ${email}\n\nMensagem:\n${message}\n\nAtenciosamente,\n${name}`
+      : `Hello Eduardo,\n\nMy name is ${name} and I would like to get in touch with you.\n\nContact details:\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}\n\nBest regards,\n${name}`;
     
-    // Criar o link mailto e abrir o cliente de email
-    const mailtoLink = `mailto:dudupiazza16@gmail.com?subject=${encodeURIComponent(subject)}&body=${emailBody}`;
-    window.open(mailtoLink, '_blank');
+    // Criar o link do Gmail web
+    const gmailLink = `https://mail.google.com/mail/?view=cm&to=dudupiazza16@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+    window.open(gmailLink, '_blank');
     
     // Limpar o formulário após envio
     e.currentTarget.reset();
