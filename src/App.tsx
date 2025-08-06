@@ -117,9 +117,8 @@ const projects = [
     description: 'Projeto de e-commerce em desenvolvimento com funcionalidades modernas',
     tech: ['React', 'Node.js', 'TypeScript', 'Stripe'],
     image: 'https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=800',
-    liveUrl: null,
-    codeUrl: 'https://github.com/piazzaxyz',
-    inConstruction: true
+    liveUrl: 'https://piazzastore.vercel.app',
+    codeUrl: 'https://github.com/piazzaxyz/PiazzaStore'
   }
 ];
 
@@ -208,6 +207,17 @@ function App() {
     setIsMenuOpen(false);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const scrollToNext = () => {
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const handleContactSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -259,11 +269,9 @@ function App() {
           <div className="header-actions">
             <button className="lang-toggle" onClick={toggleLanguage}>
               <div className={`flag-container ${currentLang === 'pt' ? 'active' : ''}`}>
-                <span className="flag">🇧🇷</span>
                 <span className="flag-text">BR</span>
               </div>
               <div className={`flag-container ${currentLang === 'en' ? 'active' : ''}`}>
-                <span className="flag">🇺🇸</span>
                 <span className="flag-text">US</span>
               </div>
             </button>
@@ -309,7 +317,7 @@ function App() {
             </div>
           </div>
           
-          <div className="scroll-indicator">
+          <div className="scroll-indicator" onClick={scrollToNext} style={{ cursor: 'pointer' }}>
             <ChevronDown className="scroll-arrow" />
           </div>
         </div>
@@ -405,19 +413,7 @@ function App() {
                 
                 <div className="project-info">
                   <h3>{t(project.title)}</h3>
-                  {project.inConstruction && (
-                    <div className="construction-badge">
-                      <Construction size={16} />
-                      Em construção
-                    </div>
-                  )}
                   <p>{t(project.description)}</p>
-                  {project.inConstruction && (
-                    <a href="https://github.com/piazzaxyz" target="_blank" rel="noopener noreferrer" className="github-link">
-                      <Github size={16} />
-                      Verificar progresso no GitHub
-                    </a>
-                  )}
                   <div className="project-tech">
                     {project.tech.map((tech) => (
                       <span key={tech} className="tech-tag">{tech}</span>
@@ -429,6 +425,42 @@ function App() {
           </div>
         </div>
       </section>
+
+      {/* Scroll to Top Button */}
+      {scrollY > 300 && (
+        <button 
+          className="scroll-to-top" 
+          onClick={scrollToTop}
+          style={{
+            position: 'fixed',
+            bottom: '2rem',
+            right: '2rem',
+            background: 'linear-gradient(45deg, var(--primary-red), var(--secondary-red))',
+            color: 'white',
+            border: 'none',
+            borderRadius: '50%',
+            width: '50px',
+            height: '50px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            zIndex: 1000,
+            boxShadow: '0 4px 15px rgba(139, 0, 0, 0.3)',
+            transition: 'all 0.3s ease'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 8px 25px rgba(139, 0, 0, 0.4)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 4px 15px rgba(139, 0, 0, 0.3)';
+          }}
+        >
+          <ChevronDown style={{ transform: 'rotate(180deg)' }} size={20} />
+        </button>
+      )}
 
       {/* Contact Section */}
       <section id="contact" className="contact">
@@ -446,6 +478,11 @@ function App() {
               <div className="contact-item">
                 <Phone className="contact-icon" />
                 <span>+55 51 99369-3721</span>
+              </div>
+              
+              <div className="contact-item">
+                <Mail className="contact-icon" />
+                <span>Porto Alegre - 90810-150</span>
               </div>
               
               <div className="contact-item">
@@ -487,17 +524,6 @@ function App() {
               </button>
             </form>
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="cta">
-        <div className="container">
-          <h2>{t('ctaTitle')}</h2>
-          <p>{t('ctaDescription')}</p>
-          <button className="cta-button" onClick={openWhatsApp}>
-            {t('ctaButton')}
-          </button>
         </div>
       </section>
 
