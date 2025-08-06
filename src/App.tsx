@@ -116,7 +116,7 @@ const projects = [
     title: 'Amostra de Loja',
     description: 'Projeto de e-commerce em desenvolvimento com funcionalidades modernas',
     tech: ['React', 'Node.js', 'TypeScript', 'Stripe'],
-    image: 'https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: '/Captura de tela 2025-08-06 180000.png',
     liveUrl: 'https://piazzastore.vercel.app',
     codeUrl: 'https://github.com/piazzaxyz/PiazzaStore'
   }
