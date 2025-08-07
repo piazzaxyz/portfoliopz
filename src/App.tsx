@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Phone, Linkedin, ExternalLink, Code, ChevronDown, Github, Construction } from 'lucide-react';
 import GooeyNav from './components/GooeyNav';
-import Iridescence from './components/Iridescence';
 import './App.css';
 
 interface Language {
@@ -140,7 +139,7 @@ const NFTAvatar = () => {
           {'}'}
         </div>
         <div className="code-line" style={{ bottom: '15%', left: '8%', fontSize: '7px', opacity: 0.25 }}>
-          <PZ />
+          &lt;PZ /&gt;
         </div>
         <div className="code-line" style={{ top: '60%', right: '8%', fontSize: '9px', opacity: 0.3, fontWeight: 'bold' }}>
           PZ
@@ -277,14 +276,11 @@ function App() {
 
   return (
     <div className="App">
-      {/* BACKGROUND IRIDESCENTE GLOBAL */}
-      <div className="global-iridescence">
-        <Iridescence
-          color={[0.4, 0.0, 0.0]}
-          speed={0.2}
-          amplitude={0.015}
-          mouseReact={true}
-        />
+      {/* Background Gradient */}
+      <div className="background-gradient">
+        <div className="gradient-layer-1"></div>
+        <div className="gradient-layer-2"></div>
+        <div className="gradient-layer-3"></div>
       </div>
 
       {/* Particles Background */}
