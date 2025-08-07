@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Phone, Linkedin, ExternalLink, Code, ChevronDown, Github, Construction } from 'lucide-react';
+import { Mail, Phone, Linkedin, ExternalLink, Code, ChevronDown, Github } from 'lucide-react';
 import GooeyNav from './components/GooeyNav';
+import Iridescence from './components/Iridescence';
 import './App.css';
 
-interface Language {
-  code: 'pt' | 'en';
-  flag: string;
-}
 
 interface Translations {
   [key: string]: {
@@ -218,7 +215,7 @@ function App() {
     { label: t('contact'), href: '#contact' }
   ];
 
-  const handleNavClick = (index: number, item: { label: string; href: string }) => {
+  const handleNavClick = (_: number, item: { label: string; href: string }) => {
     const sectionId = item.href.replace('#', '');
     scrollToSection(sectionId);
   };
@@ -276,24 +273,15 @@ function App() {
 
   return (
     <div className="App">
-      {/* Background Gradient */}
-      <div className="background-gradient">
-        <div className="gradient-layer-1"></div>
-        <div className="gradient-layer-2"></div>
-        <div className="gradient-layer-3"></div>
+      <div className="background-wrapper">
+        <Iridescence 
+          color={[0.2, 0.0, 0.0]} 
+          mouseReact={false}
+          amplitude={0.1}
+          speed={1.0}
+        />
       </div>
-
-      {/* Particles Background */}
-      <div className="particles-container">
-        {[...Array(50)].map((_, i) => (
-          <div key={i} className="particle" style={{
-            left: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 20}s`,
-            animationDuration: `${15 + Math.random() * 10}s`
-          }} />
-        ))}
-      </div>
-
+      
       {/* Header */}
       <header className={`header ${scrollY > 50 ? 'scrolled' : ''}`}>
         <div className="container">
@@ -595,5 +583,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
