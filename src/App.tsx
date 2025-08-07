@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Phone, Linkedin, ExternalLink, Code, ChevronDown, Github } from 'lucide-react';
 import GooeyNav from './components/GooeyNav';
-import Aurora from './components/Aurora';
+import Iridescence from './components/Iridescence';
 import './App.css';
 
 
@@ -274,11 +274,11 @@ function App() {
   return (
     <div className="App">
       <div className="background-wrapper">
-        <Aurora
-          colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
-          blend={0.5}
-          amplitude={1.0}
-          speed={0.5}
+        <Iridescence
+          color={[0.5, 0.1, 0.1]}
+          mouseReact={true}
+          amplitude={0.15}
+          speed={0.8}
         />
       </div>
       
@@ -474,7 +474,7 @@ function App() {
       </section>
 
       {/* Scroll to Top Button */}
-      {scrollY > 300 && (
+      {showScrollToTop && (
         <button 
           className="scroll-to-top" 
           onClick={scrollToTop}
@@ -494,14 +494,16 @@ function App() {
             cursor: 'pointer',
             zIndex: 1000,
             boxShadow: '0 4px 15px rgba(139, 0, 0, 0.3)',
-            transition: 'all 0.3s ease'
+            transition: 'all 0.3s ease',
+            opacity: showScrollToTop ? 1 : 0,
+            transform: showScrollToTop ? 'translateY(0)' : 'translateY(20px)'
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'translateY(-2px)';
             e.currentTarget.style.boxShadow = '0 8px 25px rgba(139, 0, 0, 0.4)';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.transform = showScrollToTop ? 'translateY(0)' : 'translateY(20px)';
             e.currentTarget.style.boxShadow = '0 4px 15px rgba(139, 0, 0, 0.3)';
           }}
         >
