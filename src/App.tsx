@@ -178,14 +178,55 @@ const NFTAvatar = () => {
   );
 };
 
+// Componente Error Boundary
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(): { hasError: boolean } {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('Background component error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <div style={{ 
+        position: 'fixed', 
+        top: 0, 
+        left: 0, 
+        right: 0, 
+        bottom: 0, 
+        background: '#0a0000', 
+        zIndex: -10 
+      }} />;
+    }
+
+    return this.props.children;
+  }
+}
+
 function App() {
   const [currentLang, setCurrentLang] = useState<'pt' | 'en'>('pt');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setScrollY(currentScrollY);
+      setShowScrollToTop(currentScrollY > 400);
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -274,12 +315,14 @@ function App() {
   return (
     <div className="App">
       <div className="background-wrapper">
-        <Iridescence
-          color={[0.5, 0.1, 0.1]}
-          mouseReact={true}
-          amplitude={0.15}
-          speed={0.8}
-        />
+        <ErrorBoundary>
+          <Iridescence
+            color={[0.5, 0.1, 0.1]}
+            mouseReact={true}
+            amplitude={0.15}
+            speed={0.8}
+          />
+        </ErrorBoundary>
       </div>
       
       {/* Header */}
@@ -473,44 +516,6 @@ function App() {
         </div>
       </section>
 
-      {/* Scroll to Top Button */}
-      {showScrollToTop && (
-        <button 
-          className="scroll-to-top" 
-          onClick={scrollToTop}
-          style={{
-            position: 'fixed',
-            bottom: '2rem',
-            right: '2rem',
-            background: 'linear-gradient(45deg, var(--primary-red), var(--secondary-red))',
-            color: 'white',
-            border: 'none',
-            borderRadius: '50%',
-            width: '50px',
-            height: '50px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            zIndex: 1000,
-            boxShadow: '0 4px 15px rgba(139, 0, 0, 0.3)',
-            transition: 'all 0.3s ease',
-            opacity: showScrollToTop ? 1 : 0,
-            transform: showScrollToTop ? 'translateY(0)' : 'translateY(20px)'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'translateY(-2px)';
-            e.currentTarget.style.boxShadow = '0 8px 25px rgba(139, 0, 0, 0.4)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = showScrollToTop ? 'translateY(0)' : 'translateY(20px)';
-            e.currentTarget.style.boxShadow = '0 4px 15px rgba(139, 0, 0, 0.3)';
-          }}
-        >
-          <ChevronDown style={{ transform: 'rotate(180deg)' }} size={20} />
-        </button>
-      )}
-
       {/* Contact Section */}
       <section id="contact" className="contact">
         <div className="container">
@@ -576,6 +581,44 @@ function App() {
         </div>
       </section>
 
+      {/* Scroll to Top Button */}
+      {showScrollToTop && (
+        <button 
+          className="scroll-to-top" 
+          onClick={scrollToTop}
+          style={{
+            position: 'fixed',
+            bottom: '2rem',
+            right: '2rem',
+            background: 'linear-gradient(45deg, var(--primary-red), var(--secondary-red))',
+            color: 'white',
+            border: 'none',
+            borderRadius: '50%',
+            width: '50px',
+            height: '50px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            zIndex: 1000,
+            boxShadow: '0 4px 15px rgba(139, 0, 0, 0.3)',
+            transition: 'all 0.3s ease',
+            opacity: showScrollToTop ? 1 : 0,
+            transform: showScrollToTop ? 'translateY(0)' : 'translateY(20px)'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 8px 25px rgba(139, 0, 0, 0.4)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = showScrollToTop ? 'translateY(0)' : 'translateY(20px)';
+            e.currentTarget.style.boxShadow = '0 4px 15px rgba(139, 0, 0, 0.3)';
+          }}
+        >
+          <ChevronDown style={{ transform: 'rotate(180deg)' }} size={20} />
+        </button>
+      )}
+
       {/* Footer */}
       <footer className="footer">
         <div className="container">
@@ -585,4 +628,5 @@ function App() {
     </div>
   );
 }
+
 export default App;
