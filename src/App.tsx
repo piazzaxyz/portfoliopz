@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Phone, Linkedin, ExternalLink, Code, ChevronDown, Github, Construction } from 'lucide-react';
+import GooeyNav from './components/GooeyNav';
+import Iridescence from './components/Iridescence';
 import './App.css';
 
 interface Language {
@@ -207,6 +209,16 @@ function App() {
     setIsMenuOpen(false);
   };
 
+  const navItems = [
+    { label: t('home'), href: '#home' },
+    { label: t('about'), href: '#about' },
+    { label: t('contact'), href: '#contact' }
+  ];
+
+  const handleNavClick = (index: number, item: { label: string; href: string }) => {
+    const sectionId = item.href.replace('#', '');
+    scrollToSection(sectionId);
+  };
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -273,19 +285,32 @@ function App() {
 
       {/* Header */}
       <header className={`header ${scrollY > 50 ? 'scrolled' : ''}`}>
+        <div className="header-background">
+          <Iridescence
+            color={[0.5, 0.1, 0.1]}
+            speed={0.3}
+            amplitude={0.02}
+            mouseReact={false}
+          />
+        </div>
         <div className="container">
           <div className="logo">
             <span className="logo-text">PZ</span>
           </div>
           
-          <nav className={`nav ${isMenuOpen ? 'nav-open' : ''}`}>
-            <a href="#home" onClick={() => scrollToSection('home')}>{t('home')}</a>
-            <a href="#about" onClick={() => scrollToSection('about')}>{t('about')}</a>
-            <a href="#skills" onClick={() => scrollToSection('skills')}>{t('skills')}</a>
-            <a href="#timeline" onClick={() => scrollToSection('timeline')}>{t('timeline')}</a>
-            <a href="#projects" onClick={() => scrollToSection('projects')}>{t('projects')}</a>
-            <a href="#contact" onClick={() => scrollToSection('contact')}>{t('contact')}</a>
-          </nav>
+          <div className="nav">
+            <div className="desktop-nav">
+              <GooeyNav
+                items={navItems}
+                onItemClick={handleNavClick}
+                particleCount={10}
+                particleDistances={[60, 5]}
+                particleR={80}
+                animationTime={400}
+                timeVariance={200}
+              />
+            </div>
+          </div>
 
           <div className="header-actions">
             <button className="lang-toggle" onClick={toggleLanguage}>
@@ -306,6 +331,16 @@ function App() {
               <span></span>
             </button>
           </div>
+        </div>
+        
+        {/* Mobile Navigation */}
+        <div className={`mobile-nav ${isMenuOpen ? 'nav-open' : ''}`}>
+          <a href="#home" onClick={() => scrollToSection('home')}>{t('home')}</a>
+          <a href="#about" onClick={() => scrollToSection('about')}>{t('about')}</a>
+          <a href="#skills" onClick={() => scrollToSection('skills')}>{t('skills')}</a>
+          <a href="#timeline" onClick={() => scrollToSection('timeline')}>{t('timeline')}</a>
+          <a href="#projects" onClick={() => scrollToSection('projects')}>{t('projects')}</a>
+          <a href="#contact" onClick={() => scrollToSection('contact')}>{t('contact')}</a>
         </div>
       </header>
 
