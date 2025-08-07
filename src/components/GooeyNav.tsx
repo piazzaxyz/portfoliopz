@@ -192,7 +192,6 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
           ))}
         </ul>
       </nav>
-      <span className="effect filter" ref={filterRef} />
       <span className="effect text" ref={textRef} />
     </div>
   );
