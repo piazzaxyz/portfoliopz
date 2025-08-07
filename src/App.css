@@ -83,6 +83,94 @@ body {
   will-change: auto !important;
 }
 
+/* BACKGROUND IRIDESCENTE EM CSS PURO */
+.css-iridescent-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(139, 0, 0, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(220, 20, 60, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(178, 34, 34, 0.15) 0%, transparent 50%),
+    linear-gradient(135deg, 
+      rgba(10, 0, 0, 1) 0%,
+      rgba(26, 0, 0, 0.95) 25%,
+      rgba(20, 0, 5, 0.9) 50%,
+      rgba(15, 0, 10, 0.95) 75%,
+      rgba(10, 0, 0, 1) 100%
+    );
+  animation: iridescenceMove 20s ease-in-out infinite;
+}
+
+.css-iridescent-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(ellipse at 60% 30%, rgba(139, 0, 0, 0.1) 0%, transparent 60%),
+    radial-gradient(ellipse at 30% 70%, rgba(220, 20, 60, 0.08) 0%, transparent 60%);
+  animation: iridescenceMove2 25s ease-in-out infinite reverse;
+}
+
+.css-iridescent-bg::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    conic-gradient(from 0deg at 50% 50%, 
+      rgba(139, 0, 0, 0.05) 0deg,
+      rgba(220, 20, 60, 0.03) 90deg,
+      rgba(178, 34, 34, 0.04) 180deg,
+      rgba(139, 0, 0, 0.05) 270deg,
+      rgba(139, 0, 0, 0.05) 360deg
+    );
+  animation: iridescenceRotate 30s linear infinite;
+}
+
+@keyframes iridescenceMove {
+  0%, 100% {
+    transform: translateX(0) translateY(0) scale(1);
+  }
+  25% {
+    transform: translateX(-2%) translateY(-1%) scale(1.02);
+  }
+  50% {
+    transform: translateX(1%) translateY(2%) scale(0.98);
+  }
+  75% {
+    transform: translateX(2%) translateY(-1%) scale(1.01);
+  }
+}
+
+@keyframes iridescenceMove2 {
+  0%, 100% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+  33% {
+    transform: translateX(1%) translateY(-2%) rotate(1deg);
+  }
+  66% {
+    transform: translateX(-1%) translateY(1%) rotate(-1deg);
+  }
+}
+
+@keyframes iridescenceRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 /* BACKGROUND GRADIENTE FALLBACK */
 .background-wrapper::before {
   content: '';
