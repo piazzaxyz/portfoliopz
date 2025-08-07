@@ -18,23 +18,6 @@ interface GooeyNavProps {
   onItemClick?: (index: number, item: NavItem) => void;
 }
 
-interface NavItem {
-  label: string;
-  href: string;
-}
-
-interface GooeyNavProps {
-  items: NavItem[];
-  animationTime?: number;
-  particleCount?: number;
-  particleDistances?: [number, number];
-  particleR?: number;
-  timeVariance?: number;
-  colors?: number[];
-  initialActiveIndex?: number;
-  onItemClick?: (index: number, item: NavItem) => void;
-}
-
 const GooeyNav: React.FC<GooeyNavProps> = ({
   items,
   animationTime = 600,
@@ -44,7 +27,6 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
   timeVariance = 300,
   colors = [1, 2, 3, 1, 2, 3, 1, 4],
   initialActiveIndex = 0,
-  onItemClick
   onItemClick
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -146,10 +128,6 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
       onItemClick(index, items[index]);
     }
 
-    if (onItemClick) {
-      onItemClick(index, items[index]);
-    }
-
     if (filterRef.current) {
       const particles = filterRef.current.querySelectorAll(".particle");
       particles.forEach((p) => filterRef.current!.removeChild(p));
@@ -203,7 +181,6 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
             <li
               key={index}
               className={activeIndex === index ? "active" : ""}
-              onClick={(e) => handleClick(e, index)}
               onClick={(e) => handleClick(e, index)}
             >
               <a
