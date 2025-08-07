@@ -136,7 +136,7 @@ const NFTAvatar = () => {
           {'}'}
         </div>
         <div className="code-line" style={{ bottom: '15%', left: '8%', fontSize: '7px', opacity: 0.25 }}>
-          <PZ />
+          PZ
         </div>
         <div className="code-line" style={{ top: '60%', right: '8%', fontSize: '9px', opacity: 0.3, fontWeight: 'bold' }}>
           PZ
