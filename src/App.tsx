@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Phone, Linkedin, ExternalLink, Code, ChevronDown, Github } from 'lucide-react';
 import GooeyNav from './components/GooeyNav';
-import Iridescence from './components/Iridescence';
 import './App.css';
 
 
@@ -178,41 +177,6 @@ const NFTAvatar = () => {
   );
 };
 
-// Componente Error Boundary
-class ErrorBoundary extends React.Component<
-  { children: React.ReactNode },
-  { hasError: boolean }
-> {
-  constructor(props: { children: React.ReactNode }) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError(): { hasError: boolean } {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('Background component error:', error, errorInfo);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return <div style={{ 
-        position: 'fixed', 
-        top: 0, 
-        left: 0, 
-        right: 0, 
-        bottom: 0, 
-        background: '#0a0000', 
-        zIndex: -10 
-      }} />;
-    }
-
-    return this.props.children;
-  }
-}
-
 function App() {
   const [currentLang, setCurrentLang] = useState<'pt' | 'en'>('pt');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -315,14 +279,7 @@ function App() {
   return (
     <div className="App">
       <div className="background-wrapper">
-        <ErrorBoundary>
-          <Iridescence
-            color={[0.5, 0.1, 0.1]}
-            mouseReact={true}
-            amplitude={0.15}
-            speed={0.8}
-          />
-        </ErrorBoundary>
+        <div className="css-iridescent-bg"></div>
       </div>
       
       {/* Header */}
