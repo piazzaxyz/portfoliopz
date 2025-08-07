@@ -7,16 +7,11 @@
   z-index: 0;
 }
 
-.iridescence-container canvas {
+.iridescence-canvas {
   width: 100% !important;
   height: 100% !important;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 0;
-}
-
-.iridescence-container canvas {
-  width: 100% !important;
-  height: 100% !important;
 }
