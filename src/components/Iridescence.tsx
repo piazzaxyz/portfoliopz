@@ -1,5 +1,48 @@
-import { useRef, useEffect } from 'react';
-import './Iridescence.css';
+import { Renderer, Program, Mesh, Color, Triangle } from "ogl";
+import { useEffect, useRef } from "react";
+
+const vertexShader = `
+attribute vec2 uv;
+attribute vec2 position;
+
+varying vec2 vUv;
+
+void main() {
+  vUv = uv;
+  gl_Position = vec4(position, 0, 1);
+}
+`;
+
+const fragmentShader = `
+precision highp float;
+
+uniform float uTime;
+uniform vec3 uColor;
+uniform vec3 uResolution;
+uniform vec2 uMouse;
+uniform float uAmplitude;
+uniform float uSpeed;
+
+varying vec2 vUv;
+
+void main() {
+  float mr = min(uResolution.x, uResolution.y);
+  vec2 uv = (vUv.xy * 2.0 - 1.0) * uResolution.xy / mr;
+
+  uv += (uMouse - vec2(0.5)) * uAmplitude;
+
+  float d = -uTime * 0.5 * uSpeed;
+  float a = 0.0;
+  for (float i = 0.0; i < 8.0; ++i) {
+    a += cos(i - d - a * uv.x);
+    d += sin(uv.y * i + a);
+  }
+  d += uTime * 0.5 * uSpeed;
+  vec3 col = vec3(cos(uv * vec2(d, a)) * 0.6 + 0.4, cos(a + d) * 0.5 + 0.5);
+  col = cos(col * cos(vec3(d, a, 2.5)) * 0.5 + 0.5) * uColor;
+  gl_FragColor = vec4(col, 1.0);
+}
+`;
 
 interface IridescenceProps {
   color?: [number, number, number];
@@ -8,52 +51,108 @@ interface IridescenceProps {
   mouseReact?: boolean;
 }
 
-const Iridescence: React.FC<IridescenceProps> = ({
-  color = [0.5, 0.1, 0.1],
-  speed = 0.5,
-  amplitude = 0.03,
-  mouseReact = true
-}) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const mouseRef = useRef({ x: 0, y: 0 });
+export default function Iridescence({
+  color = [0.2, 0.0, 0.0],
+  speed = 1.0,
+  amplitude = 0.1,
+  mouseReact = false,
+}: IridescenceProps) {
+  const ctnDom = useRef<HTMLDivElement>(null);
+  const mousePos = useRef({ x: 0.5, y: 0.5 });
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container || !mouseReact) return;
+    if (!ctnDom.current) return;
+    const ctn = ctnDom.current;
+    
+    // Configuração melhorada do renderer
+    const renderer = new Renderer({
+      alpha: true,
+      premultipliedAlpha: false,
+      antialias: true,
+      depth: false,
+      stencil: false,
+      preserveDrawingBuffer: true
+    });
 
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = container.getBoundingClientRect();
-      mouseRef.current.x = ((e.clientX - rect.left) / rect.width) * 100;
-      mouseRef.current.y = ((e.clientY - rect.top) / rect.height) * 100;
-      
-      container.style.setProperty('--mouse-x', `${mouseRef.current.x}%`);
-      container.style.setProperty('--mouse-y', `${mouseRef.current.y}%`);
+    const gl = renderer.gl;
+    // Configuração crítica para prevenir flash
+    gl.clearColor(0, 0, 0, 1);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+
+    let program: Program;
+
+    function resize() {
+      const scale = 1;
+      renderer.setSize(ctn.offsetWidth * scale, ctn.offsetHeight * scale);
+      if (program) {
+        program.uniforms.uResolution.value = new Color(
+          gl.canvas.width,
+          gl.canvas.height,
+          gl.canvas.width / gl.canvas.height
+        );
+      }
+    }
+    window.addEventListener("resize", resize, false);
+    resize();
+
+    const geometry = new Triangle(gl);
+    program = new Program(gl, {
+      vertex: vertexShader,
+      fragment: fragmentShader,
+      uniforms: {
+        uTime: { value: 0 },
+        uColor: { value: new Color(...color) },
+        uResolution: {
+          value: new Color(
+            gl.canvas.width,
+            gl.canvas.height,
+            gl.canvas.width / gl.canvas.height
+          ),
+        },
+        uMouse: { value: new Float32Array([mousePos.current.x, mousePos.current.y]) },
+        uAmplitude: { value: amplitude },
+        uSpeed: { value: speed },
+      },
+    });
+
+    const mesh = new Mesh(gl, { geometry, program });
+    let animateId: number;
+
+    function update(t: number) {
+      if (!ctn.parentNode) return; // Prevenção de erro
+      animateId = requestAnimationFrame(update);
+      program.uniforms.uTime.value = t * 0.001;
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      renderer.render({ scene: mesh });
+    }
+    animateId = requestAnimationFrame(update);
+    ctn.appendChild(gl.canvas);
+
+    return () => {
+      cancelAnimationFrame(animateId);
+      window.removeEventListener("resize", resize);
+      ctn.removeChild(gl.canvas);
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
-
-    container.addEventListener('mousemove', handleMouseMove);
-    return () => container.removeEventListener('mousemove', handleMouseMove);
-  }, [mouseReact]);
+  }, [color, speed, amplitude, mouseReact]);
 
   return (
-    <div 
-      ref={containerRef}
-      className="iridescence-container"
+    <div
+      ref={ctnDom}
       style={{
-        '--color-r': color[0],
-        '--color-g': color[1],
-        '--color-b': color[2],
-        '--speed': speed,
-        '--amplitude': amplitude,
-        '--mouse-x': '50%',
-        '--mouse-y': '50%'
-      } as React.CSSProperties}
-    >
-      <div className="iridescence-layer layer-1"></div>
-      <div className="iridescence-layer layer-2"></div>
-      <div className="iridescence-layer layer-3"></div>
-      <div className="iridescence-overlay"></div>
-    </div>
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        zIndex: -1,
+        background: '#0a0a0a',
+        willChange: 'transform',
+        backfaceVisibility: 'hidden',
+        perspective: '1000px',
+        transformStyle: 'preserve-3d',
+        isolation: 'isolate'
+      }}
+    />
   );
-};
-
-export default Iridescence;
+}
