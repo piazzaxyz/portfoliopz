@@ -219,6 +219,7 @@ function App() {
     const sectionId = item.href.replace('#', '');
     scrollToSection(sectionId);
   };
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -308,6 +309,11 @@ function App() {
                 particleR={80}
                 animationTime={400}
                 timeVariance={200}
+                particleCount={10}
+                particleDistances={[60, 5]}
+                particleR={80}
+                animationTime={400}
+                timeVariance={200}
               />
             </div>
           </div>
@@ -323,7 +329,7 @@ function App() {
             </button>
             
             <button 
-              className="menu-toggle"
+              className={`menu-toggle ${isMenuOpen ? 'open' : ''}`}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <span></span>
