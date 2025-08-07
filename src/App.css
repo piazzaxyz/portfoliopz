@@ -19,8 +19,7 @@
 
 /* BACKGROUND FIXES - MÁXIMA PRIORIDADE */
 html {
-  background: var(--black) !important;
-  background-color: var(--black) !important;
+  background: linear-gradient(135deg, #0a0000 0%, #1a0000 50%, #0a0000 100%) !important;
   min-height: 100% !important;
   overflow-x: hidden !important;
 }
@@ -29,8 +28,7 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   line-height: 1.6;
   color: var(--white);
-  background: var(--black) !important;
-  background-color: var(--black) !important;
+  background: linear-gradient(135deg, #0a0000 0%, #1a0000 50%, #0a0000 100%) !important;
   min-height: 100vh !important;
   position: relative;
   overflow-x: hidden;
@@ -43,8 +41,7 @@ body {
 
 /* ROOT DIV BACKGROUND FORCE */
 #root {
-  background: var(--black) !important;
-  background-color: var(--black) !important;
+  background: transparent !important;
   min-height: 100vh !important;
   position: relative;
   isolation: isolate;
@@ -54,8 +51,7 @@ body {
 .App {
   position: relative;
   min-height: 100vh !important;
-  background: var(--black) !important;
-  background-color: var(--black) !important;
+  background: transparent !important;
   isolation: isolate;
   z-index: 1;
   /* PROPRIEDADES ANTI-FLASH */
@@ -73,8 +69,7 @@ body {
   right: 0 !important;
   bottom: 0 !important;
   z-index: -10 !important;
-  background: var(--black) !important;
-  background-color: var(--black) !important;
+  background: linear-gradient(135deg, #0a0000 0%, #1a0000 50%, #0a0000 100%) !important;
   overflow: hidden !important;
   /* PROPRIEDADES ANTI-FLASH */
   backface-visibility: hidden !important;
@@ -179,8 +174,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--black) !important;
-  background-color: var(--black) !important;
+  background: linear-gradient(135deg, #0a0000 0%, #1a0000 50%, #0a0000 100%) !important;
   z-index: -1;
 }
 
@@ -1499,8 +1493,7 @@ body {
 
 /* FORÇA BACKGROUND EM TODOS OS ELEMENTOS CRÍTICOS */
 html, body, #root, .App, .background-wrapper {
-  background: var(--black) !important;
-  background-color: var(--black) !important;
+  background: linear-gradient(135deg, #0a0000 0%, #1a0000 50%, #0a0000 100%) !important;
 }
 
 /* PREVENT FLASH DURANTE LOAD */
