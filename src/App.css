@@ -31,6 +31,25 @@ body {
   padding: 0 20px;
 }
 
+/* BACKGROUND IRIDESCENTE GLOBAL */
+.global-iridescence {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.global-iridescence canvas {
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 /* Particles Background */
 .particles-container {
   position: fixed;
@@ -39,7 +58,7 @@ body {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 1;
+  z-index: -1;
 }
 
 .particle {
@@ -75,7 +94,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.95);
+  background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(30px);
   z-index: 1000;
   transition: all 0.3s ease;
@@ -84,18 +103,8 @@ body {
 }
 
 .header.scrolled {
-  background: rgba(0, 0, 0, 0.98);
+  background: rgba(0, 0, 0, 0.95);
   box-shadow: 0 8px 32px rgba(139, 0, 0, 0.3);
-}
-
-.header-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
-  opacity: 0.3;
 }
 
 .header .container {
@@ -233,10 +242,6 @@ body {
   align-items: center;
   position: relative;
   z-index: 2;
-  background: 
-    radial-gradient(ellipse at 20% 50%, rgba(139, 0, 0, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(220, 20, 60, 0.1) 0%, transparent 50%),
-    var(--black);
 }
 
 .hero-content {
@@ -426,21 +431,8 @@ body {
 /* About Section */
 .about {
   padding: 5rem 0;
-  background: var(--black);
   position: relative;
-}
-
-.about::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 30% 40%, rgba(139, 0, 0, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 70% 80%, rgba(220, 20, 60, 0.08) 0%, transparent 50%);
-  pointer-events: none;
+  z-index: 2;
 }
 
 .about-text {
@@ -457,21 +449,8 @@ body {
 /* Skills Section */
 .skills {
   padding: 5rem 0;
-  background: var(--black);
   position: relative;
-}
-
-.skills::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 80% 20%, rgba(139, 0, 0, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 20% 80%, rgba(220, 20, 60, 0.08) 0%, transparent 50%);
-  pointer-events: none;
+  z-index: 2;
 }
 
 .tech-grid {
@@ -582,20 +561,8 @@ body {
 /* Timeline Section */
 .timeline-section {
   padding: 5rem 0;
-  background: var(--black);
   position: relative;
-}
-
-.timeline-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 50% 50%, rgba(139, 0, 0, 0.1) 0%, transparent 50%);
-  pointer-events: none;
+  z-index: 2;
 }
 
 .timeline {
@@ -727,21 +694,8 @@ body {
 /* Projects Section */
 .projects {
   padding: 5rem 0;
-  background: var(--black);
   position: relative;
-}
-
-.projects::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(139, 0, 0, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(220, 20, 60, 0.08) 0%, transparent 50%);
-  pointer-events: none;
+  z-index: 2;
 }
 
 .projects-grid {
@@ -886,20 +840,8 @@ body {
 /* Contact Section */
 .contact {
   padding: 5rem 0;
-  background: var(--black);
   position: relative;
-}
-
-.contact::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 60% 40%, rgba(139, 0, 0, 0.1) 0%, transparent 50%);
-  pointer-events: none;
+  z-index: 2;
 }
 
 .contact-content {
@@ -998,63 +940,13 @@ body {
   box-shadow: 0 8px 25px rgba(139, 0, 0, 0.4);
 }
 
-/* CTA Section */
-.cta {
-  padding: 5rem 0;
-  background: linear-gradient(135deg, rgba(139, 0, 0, 0.8) 0%, rgba(178, 34, 34, 0.6) 100%);
-  text-align: center;
-  position: relative;
-}
-
-.cta::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
-  pointer-events: none;
-}
-
-.cta h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  color: var(--white);
-  position: relative;
-  z-index: 2;
-}
-
-.cta p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  color: rgba(255, 255, 255, 0.9);
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  z-index: 2;
-}
-
-.cta .cta-button {
-  background: var(--white);
-  color: var(--primary-red);
-  position: relative;
-  z-index: 2;
-}
-
-.cta .cta-button:hover {
-  background: var(--light-gray);
-}
-
 /* Footer */
 .footer {
   padding: 2rem 0;
-  background: var(--black);
   text-align: center;
   border-top: 1px solid var(--glass-border);
+  position: relative;
+  z-index: 2;
 }
 
 .footer p {
@@ -1347,10 +1239,6 @@ body {
   .photo-wrapper {
     width: 200px;
     height: 200px;
-  }
-  
-  .cta h2 {
-    font-size: 1.8rem;
   }
   
   .projects-grid {
