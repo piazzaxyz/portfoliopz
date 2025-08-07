@@ -3,13 +3,15 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* Prevenir flashes durante transições */
+  -webkit-tap-highlight-color: transparent;
 }
 
 :root {
   --primary-red: #8B0000;
   --secondary-red: #DC143C;
   --accent-red: #B22222;
-  --black: #0a0a0a;
+  --black: #100000; /* Ajustado para combinar com o background WebGL */
   --dark-gray: #1a1a1a;
   --white: #FFFFFF;
   --light-gray: #f5f5f5;
@@ -17,50 +19,58 @@
   --glass-border: rgba(255, 255, 255, 0.1);
 }
 
-/* Reset crucial */
+/* Reset crucial com background fixo */
 html, body {
   margin: 0;
   padding: 0;
-  background: #0a0a0a;
+  background: var(--black) !important;
   min-height: 100vh;
   overflow-x: hidden;
 }
 
 /* Correção do background e comportamento base */
 html {
-  background: var(--black);
+  background: var(--black) !important;
   min-height: 100%;
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   line-height: 1.6;
   color: var(--white);
-  background: var(--black);
+  background: var(--black) !important;
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Prevenir flashes */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
-/* Container principal */
+/* Container principal otimizado */
 .App {
   position: relative;
   min-height: 100vh;
-  background: transparent;
+  background: var(--black) !important;
   isolation: isolate;
 }
 
-/* Wrapper do background */
+/* Wrapper do background otimizado */
 .background-wrapper {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: -1;
-  background: #0a0a0a;
+  z-index: -2;
+  background: var(--black) !important;
   overflow: hidden;
+  contain: strict;
+  backface-visibility: hidden;
 }
 
 /* Garantir que todas as seções sejam transparentes */
@@ -76,38 +86,13 @@ body {
   background: transparent !important;
 }
 
-/* Update Iridescence container styles */
-.iridescence-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  background: var(--black);
-  pointer-events: none;
-  will-change: transform;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-}
-
-/* Update App container */
-.App {
-  position: relative;
-  z-index: 1;
-  min-height: 100vh;
-  background: transparent;
-  isolation: isolate;
-}
-
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-/* Header */
+/* Header otimizado */
 .header {
   position: fixed;
   top: 0;
@@ -116,9 +101,13 @@ body {
   z-index: 1000;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(10px);
-  height: 70px; /* Fixed height for consistent spacing */
+  -webkit-backdrop-filter: blur(10px);
+  height: 70px;
   display: flex;
   align-items: center;
+  backface-visibility: hidden;
+  contain: layout style;
+  transform: translateZ(0);
 }
 
 .header.scrolled {
@@ -147,6 +136,7 @@ body {
   text-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
   letter-spacing: 1px;
   transition: all 0.3s ease;
+  text-rendering: optimizeLegibility;
 }
 
 .logo-text:hover {
@@ -161,7 +151,6 @@ body {
 .desktop-nav {
   display: block;
 }
-
 
 .header-actions {
   display: flex;
@@ -180,6 +169,7 @@ body {
   border-radius: 25px;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .lang-toggle:hover {
@@ -490,6 +480,7 @@ body {
 .tech-card {
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   padding: 2rem;
   border-radius: 20px;
   text-align: center;
@@ -644,7 +635,7 @@ body {
   opacity: 0;
   transform: scale(0);
   box-shadow: 0 0 30px rgba(139, 0, 0, 0.6);
-  flex-shrink: 0; /* Prevent marker from shrinking */
+  flex-shrink: 0;
 }
 
 @keyframes bounceIn {
@@ -672,6 +663,7 @@ body {
   flex: 1;
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   padding: 2rem;
   border-radius: 20px;
   margin: 0 2rem;
@@ -736,6 +728,7 @@ body {
 .project-card {
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 20px;
   overflow: hidden;
   transition: all 0.3s ease;
@@ -892,6 +885,7 @@ body {
   padding: 1.5rem;
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 15px;
   border: 1px solid var(--glass-border);
   transition: all 0.3s ease;
@@ -930,6 +924,7 @@ body {
   padding: 1rem;
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   border-radius: 15px;
   color: var(--white);
@@ -1152,6 +1147,7 @@ body {
     right: 0;
     background: rgba(0, 0, 0, 0.95);
     backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -1230,7 +1226,7 @@ body {
 
 @media (max-width: 768px) {
   .header {
-    height: 60px; /* Slightly smaller on mobile */
+    height: 60px;
   }
 
   .header .container {
@@ -1238,7 +1234,7 @@ body {
   }
 
   .mobile-nav {
-    top: 60px; /* Match new header height */
+    top: 60px;
   }
 
   .logo-text {
@@ -1252,22 +1248,22 @@ body {
   }
 
   .timeline::before {
-    left: 20px; /* Adjust line position for mobile */
+    left: 20px;
   }
 
   .timeline-item {
-    flex-direction: row !important; /* Force all items to same direction */
-    margin-left: 20px; /* Give space for the line */
+    flex-direction: row !important;
+    margin-left: 20px;
   }
 
   .timeline-marker {
-    width: 60px; /* Smaller size for mobile */
+    width: 60px;
     height: 60px;
-    margin-right: 20px; /* Space between marker and content */
+    margin-right: 20px;
   }
 
   .timeline-year {
-    font-size: 1rem; /* Smaller font size for mobile */
+    font-size: 1rem;
   }
 
   .timeline-content {
@@ -1279,11 +1275,11 @@ body {
 
 @media (max-width: 480px) {
   .header {
-    height: 55px; /* Even smaller on very small devices */
+    height: 55px;
   }
 
   .mobile-nav {
-    top: 55px; /* Match header height */
+    top: 55px;
   }
 
   .header .container {
@@ -1291,7 +1287,7 @@ body {
   }
 
   .timeline-marker {
-    width: 50px; /* Even smaller for very small devices */
+    width: 50px;
     height: 50px;
     margin-right: 15px;
   }
@@ -1305,21 +1301,16 @@ body {
   }
 }
 
-/* Prevent flash of unstyled content */
-.App {
-  opacity: 1;
-  visibility: visible;
-}
-
 /* Mobile Navigation Fixes */
 .mobile-nav {
-  display: none; /* Hide by default */
+  display: none;
   position: fixed;
-  top: 50px; /* Adjust based on header height */
+  top: 50px;
   left: 0;
   width: 100%;
   background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 1000;
   padding: 1rem 0;
   transform: translateY(-100%);
@@ -1347,6 +1338,7 @@ body {
 .header-actions button {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -1359,24 +1351,24 @@ body {
 /* Media Queries */
 @media (min-width: 769px) {
   .mobile-nav {
-    display: none !important; /* Always hide on desktop */
+    display: none !important;
   }
   
   .menu-toggle {
-    display: none; /* Hide menu toggle on desktop */
+    display: none;
   }
 }
 
 @media (max-width: 768px) {
   .mobile-nav {
-    display: block; /* Show on mobile */
+    display: block;
   }
   
   .desktop-nav {
-    display: none; /* Hide desktop nav on mobile */
+    display: none;
   }
   
   .menu-toggle {
-    display: block; /* Show menu toggle on mobile */
+    display: block;
   }
 }
