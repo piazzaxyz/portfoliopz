@@ -140,7 +140,7 @@ const NFTAvatar = () => {
           {'}'}
         </div>
         <div className="code-line" style={{ bottom: '15%', left: '8%', fontSize: '7px', opacity: 0.25 }}>
-          &lt;PZ /&gt;
+          <PZ />
         </div>
         <div className="code-line" style={{ top: '60%', right: '8%', fontSize: '9px', opacity: 0.3, fontWeight: 'bold' }}>
           PZ
@@ -209,9 +209,13 @@ function App() {
     setIsMenuOpen(false);
   };
 
+  // NAVEGAÇÃO COMPLETA COM TODOS OS ITENS
   const navItems = [
     { label: t('home'), href: '#home' },
     { label: t('about'), href: '#about' },
+    { label: t('skills'), href: '#skills' },
+    { label: t('timeline'), href: '#timeline' },
+    { label: t('projects'), href: '#projects' },
     { label: t('contact'), href: '#contact' }
   ];
 
@@ -273,6 +277,16 @@ function App() {
 
   return (
     <div className="App">
+      {/* BACKGROUND IRIDESCENTE GLOBAL */}
+      <div className="global-iridescence">
+        <Iridescence
+          color={[0.4, 0.0, 0.0]}
+          speed={0.2}
+          amplitude={0.015}
+          mouseReact={true}
+        />
+      </div>
+
       {/* Particles Background */}
       <div className="particles-container">
         {[...Array(50)].map((_, i) => (
@@ -286,14 +300,6 @@ function App() {
 
       {/* Header */}
       <header className={`header ${scrollY > 50 ? 'scrolled' : ''}`}>
-        <div className="header-background">
-          <Iridescence
-            color={[0.5, 0.1, 0.1]}
-            speed={0.3}
-            amplitude={0.02}
-            mouseReact={false}
-          />
-        </div>
         <div className="container">
           <div className="logo">
             <span className="logo-text">PZ</span>
@@ -304,16 +310,11 @@ function App() {
               <GooeyNav
                 items={navItems}
                 onItemClick={handleNavClick}
-                particleCount={10}
-                particleDistances={[60, 5]}
-                particleR={80}
-                animationTime={400}
-                timeVariance={200}
-                particleCount={10}
-                particleDistances={[60, 5]}
-                particleR={80}
-                animationTime={400}
-                timeVariance={200}
+                particleCount={12}
+                particleDistances={[70, 8]}
+                particleR={85}
+                animationTime={450}
+                timeVariance={250}
               />
             </div>
           </div>
