@@ -604,6 +604,9 @@ body {
   animation: slideUp 0.6s ease forwards;
   opacity: 0;
   transform: translateY(30px);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
 
 @keyframes slideUp {
@@ -620,28 +623,82 @@ body {
   background: rgba(139, 0, 0, 0.1);
 }
 
+.tech-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(139, 0, 0, 0.1), transparent);
+  transition: left 0.6s ease;
+  z-index: 1;
+}
+
+.tech-card:hover::before {
+  left: 100%;
+}
+
 .tech-icon {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 1rem;
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: var(--white);
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.tech-logo {
+  width: 50px;
+  height: 50px;
+  transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
 .tech-card:hover .tech-icon {
-  transform: scale(1.1) rotate(5deg);
+  transform: scale(1.15) rotateY(10deg) rotateX(10deg);
+  box-shadow: 
+    0 10px 30px rgba(139, 0, 0, 0.4),
+    0 0 20px rgba(255, 255, 255, 0.1);
+  border-color: var(--secondary-red);
+  background: rgba(139, 0, 0, 0.2);
+}
+
+.tech-card:hover .tech-logo {
+  transform: scale(1.1);
+  filter: 
+    drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4))
+    drop-shadow(0 0 15px rgba(139, 0, 0, 0.3));
+}
+
+.tech-card:active .tech-icon {
+  transform: scale(1.05) rotateY(5deg) rotateX(5deg);
+}
+
+.tech-card:active .tech-logo {
+  transform: scale(1.05);
 }
 
 .tech-card h3 {
   margin-bottom: 1rem;
   color: var(--white);
   font-size: 1.2rem;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.tech-card:hover h3 {
+  color: var(--secondary-red);
+  text-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
 }
 
 .skill-bar {
@@ -651,6 +708,8 @@ body {
   border-radius: 5px;
   overflow: hidden;
   margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 2;
 }
 
 .skill-progress {
@@ -659,6 +718,7 @@ body {
   transition: width 1s ease;
   animation: fillBar 2s ease forwards;
   position: relative;
+  overflow: hidden;
 }
 
 .skill-progress::after {
@@ -687,6 +747,14 @@ body {
   font-size: 0.9rem;
   color: var(--secondary-red);
   font-weight: 600;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.tech-card:hover .skill-percentage {
+  color: var(--white);
+  text-shadow: 0 0 8px rgba(139, 0, 0, 0.8);
 }
 
 /* Timeline Section */
