@@ -4,10 +4,6 @@
   --color-2: #DC143C;
   --color-3: #B22222;
   --color-4: #FF6B6B;
-  --color-1: #8B0000;
-  --color-2: #DC143C;
-  --color-3: #B22222;
-  --color-4: #FF6B6B;
 }
 
 .gooey-nav-container {
@@ -44,10 +40,6 @@
 .gooey-nav-container nav ul li a {
   display: inline-block;
   padding: 0.6em 1em;
-  text-decoration: none;
-  color: inherit;
-  font-weight: 500;
-  font-size: 0.95rem;
   text-decoration: none;
   color: inherit;
   font-weight: 500;
@@ -95,8 +87,6 @@
 
 .gooey-nav-container .effect.text {
   color: white;
-  transition: color 0.3s ease;
-  font-weight: 500;
   transition: color 0.3s ease;
   font-weight: 500;
 }
@@ -217,31 +207,6 @@
   100% {
     transform: scale(0);
     opacity: 0;
-  }
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .gooey-nav-container nav ul {
-    gap: 1em;
-    padding: 0 0.5em;
-  }
-  
-  .gooey-nav-container nav ul li a {
-    padding: 0.5em 0.8em;
-    font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .gooey-nav-container nav ul {
-    gap: 0.5em;
-    padding: 0 0.3em;
-  }
-  
-  .gooey-nav-container nav ul li a {
-    padding: 0.4em 0.6em;
-    font-size: 0.85rem;
   }
 }
 
