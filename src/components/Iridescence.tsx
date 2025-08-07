@@ -1,5 +1,5 @@
 import { Renderer, Program, Mesh, Color, Triangle } from "ogl";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 
 const vertexShader = `
 attribute vec2 uv;
@@ -59,82 +59,189 @@ export default function Iridescence({
 }: IridescenceProps) {
   const ctnDom = useRef<HTMLDivElement>(null);
   const mousePos = useRef({ x: 0.5, y: 0.5 });
+  const rendererRef = useRef<Renderer | null>(null);
+  const animationRef = useRef<number | null>(null);
+  const isInitializedRef = useRef(false);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  const cleanup = useCallback(() => {
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+      animationRef.current = null;
+    }
+    
+    if (rendererRef.current) {
+      const gl = rendererRef.current.gl;
+      
+      // Limpar WebGL context
+      const loseContext = gl.getExtension('WEBGL_lose_context');
+      if (loseContext) {
+        loseContext.loseContext();
+      }
+      
+      rendererRef.current = null;
+    }
+    
+    if (canvasRef.current && canvasRef.current.parentNode) {
+      canvasRef.current.parentNode.removeChild(canvasRef.current);
+      canvasRef.current = null;
+    }
+    
+    isInitializedRef.current = false;
+  }, []);
 
   useEffect(() => {
-    if (!ctnDom.current) return;
+    if (!ctnDom.current || isInitializedRef.current) return;
+
     const ctn = ctnDom.current;
+    let isMounted = true;
     
-    // Configuração melhorada do renderer
-    const renderer = new Renderer({
-      alpha: true,
-      premultipliedAlpha: false,
-      antialias: true,
-      depth: false,
-      stencil: false,
-      preserveDrawingBuffer: true
-    });
+    // Criar canvas manualmente para melhor controle
+    const canvas = document.createElement('canvas');
+    canvasRef.current = canvas;
+    
+    // Configurar canvas ANTES de adicionar ao DOM
+    canvas.style.cssText = `
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #100000;
+      pointer-events: none;
+      z-index: -1;
+      display: block;
+      opacity: 1;
+    `;
+    
+    // Adicionar canvas ao DOM
+    ctn.appendChild(canvas);
+    
+    try {
+      // Configuração otimizada do renderer
+      const renderer = new Renderer({
+        canvas: canvas,
+        alpha: false, // Mudado para false para evitar transparência
+        premultipliedAlpha: false,
+        antialias: false,
+        depth: false,
+        stencil: false,
+        preserveDrawingBuffer: false,
+        powerPreference: "default"
+      });
 
-    const gl = renderer.gl;
-    // Configuração crítica para prevenir flash
-    gl.clearColor(0, 0, 0, 1);
-    gl.clear(gl.COLOR_BUFFER_BIT);
+      rendererRef.current = renderer;
+      const gl = renderer.gl;
+      
+      // Configuração inicial do WebGL
+      gl.clearColor(0.0627, 0, 0, 1);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.disable(gl.DEPTH_TEST);
+      gl.disable(gl.STENCIL_TEST);
 
-    let program: Program;
+      let program: Program;
+      let mesh: Mesh;
 
-    function resize() {
-      const scale = 1;
-      renderer.setSize(ctn.offsetWidth * scale, ctn.offsetHeight * scale);
-      if (program) {
-        program.uniforms.uResolution.value = new Color(
-          gl.canvas.width,
-          gl.canvas.height,
-          gl.canvas.width / gl.canvas.height
-        );
+      const resize = () => {
+        if (!isMounted || !ctn.parentNode || !canvas) return;
+        
+        const rect = ctn.getBoundingClientRect();
+        const scale = Math.min(window.devicePixelRatio || 1, 2);
+        
+        const width = Math.max(rect.width * scale, 1);
+        const height = Math.max(rect.height * scale, 1);
+        
+        renderer.setSize(width, height);
+        
+        if (program) {
+          program.uniforms.uResolution.value = new Color(width, height, width / height);
+        }
+      };
+
+      // Event listeners
+      const resizeObserver = new ResizeObserver(() => {
+        requestAnimationFrame(resize);
+      });
+      resizeObserver.observe(ctn);
+      
+      // Resize inicial
+      resize();
+
+      const geometry = new Triangle(gl);
+      program = new Program(gl, {
+        vertex: vertexShader,
+        fragment: fragmentShader,
+        uniforms: {
+          uTime: { value: 0 },
+          uColor: { value: new Color(...color) },
+          uResolution: {
+            value: new Color(
+              gl.canvas.width,
+              gl.canvas.height,
+              gl.canvas.width / gl.canvas.height
+            ),
+          },
+          uMouse: { value: new Float32Array([mousePos.current.x, mousePos.current.y]) },
+          uAmplitude: { value: amplitude },
+          uSpeed: { value: speed },
+        },
+      });
+
+      mesh = new Mesh(gl, { geometry, program });
+
+      const update = (t: number) => {
+        if (!isMounted || !ctn.parentNode || !canvas) return;
+        
+        try {
+          program.uniforms.uTime.value = t * 0.001;
+          
+          // Limpar com cor consistente
+          gl.clearColor(0.0627, 0, 0, 1);
+          gl.clear(gl.COLOR_BUFFER_BIT);
+          
+          renderer.render({ scene: mesh });
+          
+          if (isMounted) {
+            animationRef.current = requestAnimationFrame(update);
+          }
+        } catch (error) {
+          console.warn('WebGL render error:', error);
+          if (isMounted) {
+            animationRef.current = requestAnimationFrame(update);
+          }
+        }
+      };
+
+      isInitializedRef.current = true;
+      
+      // Iniciar animação após um pequeno delay para garantir que tudo está pronto
+      setTimeout(() => {
+        if (isMounted) {
+          animationRef.current = requestAnimationFrame(update);
+        }
+      }, 16);
+
+      return () => {
+        isMounted = false;
+        resizeObserver.disconnect();
+        cleanup();
+      };
+
+    } catch (error) {
+      console.error('Failed to initialize Iridescence:', error);
+      isInitializedRef.current = false;
+      // Manter o canvas com background sólido mesmo se WebGL falhar
+      if (canvas) {
+        canvas.style.background = '#100000';
       }
     }
-    window.addEventListener("resize", resize, false);
-    resize();
 
-    const geometry = new Triangle(gl);
-    program = new Program(gl, {
-      vertex: vertexShader,
-      fragment: fragmentShader,
-      uniforms: {
-        uTime: { value: 0 },
-        uColor: { value: new Color(...color) },
-        uResolution: {
-          value: new Color(
-            gl.canvas.width,
-            gl.canvas.height,
-            gl.canvas.width / gl.canvas.height
-          ),
-        },
-        uMouse: { value: new Float32Array([mousePos.current.x, mousePos.current.y]) },
-        uAmplitude: { value: amplitude },
-        uSpeed: { value: speed },
-      },
-    });
+  }, [color, speed, amplitude, mouseReact, cleanup]);
 
-    const mesh = new Mesh(gl, { geometry, program });
-    let animateId: number;
-
-    function update(t: number) {
-      if (!ctn.parentNode) return; // Prevenção de erro
-      animateId = requestAnimationFrame(update);
-      program.uniforms.uTime.value = t * 0.001;
-      gl.clear(gl.COLOR_BUFFER_BIT);
-      renderer.render({ scene: mesh });
-    }
-    animateId = requestAnimationFrame(update);
-    ctn.appendChild(gl.canvas);
-
-    return () => {
-      cancelAnimationFrame(animateId);
-      window.removeEventListener("resize", resize);
-      ctn.removeChild(gl.canvas);
-      gl.getExtension("WEBGL_lose_context")?.loseContext();
-    };
-  }, [color, speed, amplitude, mouseReact]);
+  // Cleanup on unmount
+  useEffect(() => {
+    return cleanup;
+  }, [cleanup]);
 
   return (
     <div
@@ -145,13 +252,13 @@ export default function Iridescence({
         left: 0,
         width: '100%',
         height: '100%',
-        zIndex: -1,
-        background: '#0a0a0a',
-        willChange: 'transform',
-        backfaceVisibility: 'hidden',
-        perspective: '1000px',
-        transformStyle: 'preserve-3d',
-        isolation: 'isolate'
+        zIndex: -2,
+        background: '#100000',
+        pointerEvents: 'none',
+        overflow: 'hidden',
+        contain: 'strict',
+        isolation: 'isolate',
+        willChange: 'auto'
       }}
     />
   );
