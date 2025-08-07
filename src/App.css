@@ -1,4 +1,4 @@
-/* CORREÇÃO DEFINITIVA - CSS OTIMIZADO PARA PREVENIR FLASHES */
+/* CORREÇÃO DEFINITIVA - CSS OTIMIZADO */
 * {
   margin: 0;
   padding: 0;
@@ -17,68 +17,40 @@
   --glass-border: rgba(255, 255, 255, 0.1);
 }
 
-/* BACKGROUND FIXES - MÁXIMA PRIORIDADE */
-html {
-  background: linear-gradient(135deg, #0a0000 0%, #1a0000 50%, #0a0000 100%) !important;
-  min-height: 100% !important;
-  overflow-x: hidden !important;
-}
-
-body {
+/* BACKGROUND PRINCIPAL */
+html, body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   line-height: 1.6;
   color: var(--white);
-  background: linear-gradient(135deg, #0a0000 0%, #1a0000 50%, #0a0000 100%) !important;
-  min-height: 100vh !important;
-  position: relative;
+  background: linear-gradient(135deg, #0a0000 0%, #1a0000 50%, #0a0000 100%);
+  min-height: 100vh;
   overflow-x: hidden;
-  /* ANTI-FLASH PROPERTIES */
-  backface-visibility: hidden !important;
-  -webkit-backface-visibility: hidden !important;
-  transform: translateZ(0) !important;
-  -webkit-transform: translateZ(0) !important;
 }
 
-/* ROOT DIV BACKGROUND FORCE */
 #root {
-  background: transparent !important;
-  min-height: 100vh !important;
-  position: relative;
-  isolation: isolate;
+  background: transparent;
+  min-height: 100vh;
 }
 
-/* APP CONTAINER - FORÇA BACKGROUND */
 .App {
   position: relative;
-  min-height: 100vh !important;
-  background: transparent !important;
-  isolation: isolate;
-  z-index: 1;
-  /* PROPRIEDADES ANTI-FLASH */
-  backface-visibility: hidden !important;
-  -webkit-backface-visibility: hidden !important;
-  transform: translateZ(0) !important;
-  contain: layout paint;
+  min-height: 100vh;
+  background: transparent;
 }
 
-/* BACKGROUND WRAPPER - MÚLTIPLAS CAMADAS DE PROTEÇÃO */
+/* BACKGROUND WRAPPER */
 .background-wrapper {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  z-index: -10 !important;
-  background: linear-gradient(135deg, #0a0000 0%, #1a0000 50%, #0a0000 100%) !important;
-  overflow: hidden !important;
-  /* PROPRIEDADES ANTI-FLASH */
-  backface-visibility: hidden !important;
-  -webkit-backface-visibility: hidden !important;
-  transform: translateZ(0) !important;
-  will-change: auto !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -10;
+  background: linear-gradient(135deg, #0a0000 0%, #1a0000 50%, #0a0000 100%);
+  overflow: hidden;
 }
 
-/* BACKGROUND IRIDESCENTE EM CSS PURO */
+/* BACKGROUND IRIDESCENTE */
 .css-iridescent-bg {
   position: absolute;
   top: 0;
@@ -131,67 +103,21 @@ body {
 }
 
 @keyframes iridescenceMove {
-  0%, 100% {
-    transform: translateX(0) translateY(0) scale(1);
-  }
-  25% {
-    transform: translateX(-2%) translateY(-1%) scale(1.02);
-  }
-  50% {
-    transform: translateX(1%) translateY(2%) scale(0.98);
-  }
-  75% {
-    transform: translateX(2%) translateY(-1%) scale(1.01);
-  }
+  0%, 100% { transform: translateX(0) translateY(0) scale(1); }
+  25% { transform: translateX(-2%) translateY(-1%) scale(1.02); }
+  50% { transform: translateX(1%) translateY(2%) scale(0.98); }
+  75% { transform: translateX(2%) translateY(-1%) scale(1.01); }
 }
 
 @keyframes iridescenceMove2 {
-  0%, 100% {
-    transform: translateX(0) translateY(0) rotate(0deg);
-  }
-  33% {
-    transform: translateX(1%) translateY(-2%) rotate(1deg);
-  }
-  66% {
-    transform: translateX(-1%) translateY(1%) rotate(-1deg);
-  }
+  0%, 100% { transform: translateX(0) translateY(0) rotate(0deg); }
+  33% { transform: translateX(1%) translateY(-2%) rotate(1deg); }
+  66% { transform: translateX(-1%) translateY(1%) rotate(-1deg); }
 }
 
 @keyframes iridescenceRotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/* BACKGROUND GRADIENTE FALLBACK */
-.background-wrapper::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, #0a0000 0%, #1a0000 50%, #0a0000 100%) !important;
-  z-index: -1;
-}
-
-/* SEÇÕES - GARANTIR TRANSPARÊNCIA SEM CONFLITOS */
-.section,
-.hero,
-.about,
-.skills,
-.projects,
-.contact,
-.footer {
-  position: relative;
-  z-index: 2;
-  background: transparent !important;
-  /* ANTI-FLASH PARA SEÇÕES */
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .container {
@@ -200,7 +126,7 @@ body {
   padding: 0 20px;
 }
 
-/* HEADER - OPTIMIZADO */
+/* HEADER */
 .header {
   position: fixed;
   top: 0;
@@ -209,15 +135,10 @@ body {
   z-index: 1000;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   height: 70px;
   display: flex;
   align-items: center;
-  /* ANTI-FLASH PARA HEADER */
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform: translateZ(0);
-  will-change: background-color, backdrop-filter;
+  transition: all 0.3s ease;
 }
 
 .header.scrolled {
@@ -237,7 +158,6 @@ body {
 .logo-text {
   font-size: 2.5rem;
   font-weight: 900;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   background: linear-gradient(45deg, var(--primary-red), var(--secondary-red));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -278,7 +198,6 @@ body {
   border-radius: 25px;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
 .lang-toggle:hover {
@@ -451,12 +370,8 @@ body {
 }
 
 @keyframes typewriter {
-  0% {
-    width: 0;
-  }
-  100% {
-    width: 100%;
-  }
+  0% { width: 0; }
+  100% { width: 100%; }
 }
 
 .hero-subtitle {
@@ -566,8 +481,6 @@ body {
   margin: 0 auto;
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.8;
-  position: relative;
-  z-index: 2;
 }
 
 /* Skills Section */
@@ -582,14 +495,11 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   margin-top: 3rem;
-  position: relative;
-  z-index: 2;
 }
 
 .tech-card {
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   padding: 2rem;
   border-radius: 20px;
   text-align: center;
@@ -646,7 +556,6 @@ body {
   z-index: 2;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -671,14 +580,6 @@ body {
   filter: 
     drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4))
     drop-shadow(0 0 15px rgba(139, 0, 0, 0.3));
-}
-
-.tech-card:active .tech-icon {
-  transform: scale(1.05) rotateY(5deg) rotateX(5deg);
-}
-
-.tech-card:active .tech-logo {
-  transform: scale(1.05);
 }
 
 .tech-card h3 {
@@ -727,9 +628,7 @@ body {
 }
 
 @keyframes fillBar {
-  0% {
-    width: 0;
-  }
+  0% { width: 0; }
 }
 
 @keyframes shimmer {
@@ -762,7 +661,6 @@ body {
   position: relative;
   max-width: 800px;
   margin: 0 auto;
-  z-index: 2;
 }
 
 .timeline::before {
@@ -779,12 +677,8 @@ body {
 }
 
 @keyframes drawLine {
-  0% {
-    height: 0;
-  }
-  100% {
-    height: 100%;
-  }
+  0% { height: 0; }
+  100% { height: 100%; }
 }
 
 .timeline-item {
@@ -840,7 +734,6 @@ body {
   flex: 1;
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   padding: 2rem;
   border-radius: 20px;
   margin: 0 2rem;
@@ -898,14 +791,11 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 3rem;
   margin-top: 3rem;
-  position: relative;
-  z-index: 2;
 }
 
 .project-card {
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border-radius: 20px;
   overflow: hidden;
   transition: all 0.3s ease;
@@ -1045,8 +935,6 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   margin-top: 3rem;
-  position: relative;
-  z-index: 2;
 }
 
 .contact-info {
@@ -1062,7 +950,6 @@ body {
   padding: 1.5rem;
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border-radius: 15px;
   border: 1px solid var(--glass-border);
   transition: all 0.3s ease;
@@ -1101,7 +988,6 @@ body {
   padding: 1rem;
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   border-radius: 15px;
   color: var(--white);
@@ -1307,20 +1193,7 @@ body {
   100% { transform: translateX(100%); }
 }
 
-/* OTIMIZAÇÕES PARA SCROLL - MÁXIMA PERFORMANCE */
-* {
-  /* PROPRIEDADES ANTI-FLASH GLOBAIS */
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-/* DESABILITAR ANIMAÇÕES DURANTE SCROLL (OPCIONAL) */
-.reduce-motion-during-scroll {
-  animation-play-state: paused !important;
-  transition: none !important;
-}
-
-/* RESPONSIVE DESIGN - OTIMIZADO */
+/* RESPONSIVE DESIGN */
 @media (max-width: 1024px) {
   .desktop-nav {
     display: none;
@@ -1328,6 +1201,8 @@ body {
   
   .menu-toggle {
     display: flex;
+    flex-direction: column;
+    justify-content: space-around;
   }
   
   .mobile-nav {
@@ -1335,9 +1210,8 @@ body {
     top: 70px;
     left: 0;
     right: 0;
-    background: rgba(0, 0, 0, 0.95) !important;
+    background: rgba(0, 0, 0, 0.95);
     backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -1428,7 +1302,7 @@ body {
   }
 
   .logo-text {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
 
   .menu-toggle {
@@ -1442,8 +1316,12 @@ body {
   }
 
   .timeline-item {
-    flex-direction: row !important;
+    flex-direction: row;
     margin-left: 20px;
+  }
+
+  .timeline-item:nth-child(odd) {
+    flex-direction: row;
   }
 
   .timeline-marker {
@@ -1489,40 +1367,46 @@ body {
   .timeline-item {
     margin-left: 15px;
   }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .tech-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
 }
 
-/* FORÇA BACKGROUND EM TODOS OS ELEMENTOS CRÍTICOS */
-html, body, #root, .App, .background-wrapper {
-  background: linear-gradient(135deg, #0a0000 0%, #1a0000 50%, #0a0000 100%) !important;
-}
-
-/* PREVENT FLASH DURANTE LOAD */
-.App {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* MOBILE NAVIGATION FIXES */
-@media (min-width: 769px) {
+/* MOBILE NAVIGATION VISIBILITY FIXES */
+@media (min-width: 1025px) {
   .mobile-nav {
     display: none !important;
   }
   
   .menu-toggle {
-    display: none;
+    display: none !important;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .mobile-nav {
-    display: block;
+    display: flex;
   }
   
   .desktop-nav {
-    display: none;
+    display: none !important;
   }
   
   .menu-toggle {
-    display: block;
+    display: flex;
   }
 }
