@@ -117,6 +117,14 @@ const projects = [
     image: '/LojaAmostraPZ.png',
     liveUrl: 'https://piazzastore.vercel.app',
     codeUrl: 'https://github.com/piazzaxyz/PiazzaStore'
+  },
+  {
+    title: 'Bots Personalizados',
+    description: 'Sistema de Bots avançado com recursos de moderação, sistema de tickets, sistema de ponto, etc...',
+    tech: ['JavaScript', 'Node.js', 'Discord.js', 'MongoDB'],
+    image: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=800',
+    liveUrl: null,
+    codeUrl: null
   }
 ];
 
@@ -446,16 +454,18 @@ function App() {
                 <div className="project-image">
                   <img src={project.image} alt={t(project.title)} />
                   <div className="project-overlay">
-                    {project.liveUrl && (
+                    {project.liveUrl && project.liveUrl !== null && (
                       <a href={project.liveUrl} className="project-btn live-btn" target="_blank" rel="noopener noreferrer">
                         <ExternalLink size={16} />
                         {t('viewLive')}
                       </a>
                     )}
-                    <a href={project.codeUrl} className="project-btn code-btn" target="_blank" rel="noopener noreferrer">
-                      <Code size={16} />
-                      {t('viewCode')}
-                    </a>
+                    {project.codeUrl && project.codeUrl !== null && (
+                      <a href={project.codeUrl} className="project-btn code-btn" target="_blank" rel="noopener noreferrer">
+                        <Code size={16} />
+                        {t('viewCode')}
+                      </a>
+                    )}
                   </div>
                 </div>
                 
