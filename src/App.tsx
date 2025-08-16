@@ -122,7 +122,7 @@ const projects = [
     title: 'Bots Personalizados',
     description: 'Sistema de Bots avançado com recursos de moderação, sistema de tickets, sistema de ponto, etc...',
     tech: ['JavaScript', 'Node.js', 'Discord.js', 'MongoDB'],
-    image: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: '/ChatGPT Image 15 de ago. de 2025, 21_47_22.png',
     liveUrl: null,
     codeUrl: null
   }
