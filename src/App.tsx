@@ -90,21 +90,21 @@ const timelineData = [
     tech: ['React', 'Node.js', 'TypeScript', 'HTML', 'CSS', 'Git', 'Figma']
   },
   {
-    year: '2024',
-    title: 'timeline2024',
-    description: 'timeline2024Desc',
+    year: '2025',
+    title: 'timeline2025',
+    description: 'timeline2025Desc',
     tech: ['React', 'Node.js', 'TypeScript', 'HTML', 'CSS', 'Git', 'Figma']
   },
   {
-    year: '2023',
-    title: 'timeline2023Alura',
-    description: 'timeline2023AluraDesc',
+    year: '2025',
+    title: 'timeline2025Alura',
+    description: 'timeline2025AluraDesc',
     tech: ['React', 'Node.js', 'TypeScript', 'HTML', 'CSS', 'Git', 'Figma']
   },
   {
-    year: '2023',
-    title: 'timeline2023IBM',
-    description: 'timeline2023IBMDesc',
+    year: '2025',
+    title: 'timeline2025IBM',
+    description: 'timeline2025IBMDesc',
     tech: ['React', 'Node.js', 'TypeScript', 'HTML', 'CSS', 'Git', 'Figma']
   }
 ];
