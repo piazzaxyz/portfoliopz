@@ -85,24 +85,24 @@ const techStack = [
 const timelineData = [
   {
     year: '2025',
-    title: 'timeline2024',
-    description: 'timeline2024Desc',
-    tech: ['React', 'Node.js', 'TypeScript', 'HTML', 'CSS', 'Git', 'Figma']
-  },
-  {
-    year: '2024',
     title: 'timelineIntern',
     description: 'timelineInternDesc',
     tech: ['React', 'Node.js', 'TypeScript', 'HTML', 'CSS', 'Git', 'Figma']
   },
   {
-    year: '2025',
+    year: '2024',
+    title: 'timeline2024',
+    description: 'timeline2024Desc',
+    tech: ['React', 'Node.js', 'TypeScript', 'HTML', 'CSS', 'Git', 'Figma']
+  },
+  {
+    year: '2023',
     title: 'timeline2023Alura',
     description: 'timeline2023AluraDesc',
     tech: ['React', 'Node.js', 'TypeScript', 'HTML', 'CSS', 'Git', 'Figma']
   },
   {
-    year: '2025',
+    year: '2023',
     title: 'timeline2023IBM',
     description: 'timeline2023IBMDesc',
     tech: ['React', 'Node.js', 'TypeScript', 'HTML', 'CSS', 'Git', 'Figma']
