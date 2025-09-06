@@ -41,10 +41,12 @@ const translations: Translations = {
   timeline2024Desc: { pt: 'Criação de sites e aplicações web', en: 'Creating websites and web applications' },
   timelineIntern: { pt: 'Estagiário FrontEnd', en: 'FrontEnd Intern' },
   timelineInternDesc: { pt: 'Desenvolvimento de interfaces modernas e responsivas', en: 'Development of modern and responsive interfaces' },
+  timelineFreelancer: { pt: 'Freelancer Full-Stack', en: 'Freelancer Full-Stack' },
+  timelineFreelancerDesc: { pt: 'Desenvolvimento de projetos web completos', en: 'Complete web project development' },
   timeline2023Alura: { pt: 'Certificações ALURA', en: 'ALURA Certifications' },
   timeline2023AluraDesc: { pt: 'Especialização em desenvolvimento web', en: 'Specialization in web development' },
-  timeline2023IBM: { pt: 'Curso IBM', en: 'IBM Course' },
-  timeline2023IBMDesc: { pt: 'Aprofundamento em tecnologias empresariais', en: 'Deep dive into enterprise technologies' },
+  timeline2023IBM: { pt: 'Certificações IBM', en: 'IBM Certifications' },
+  timeline2023IBMDesc: { pt: 'Certificações em tecnologias empresariais', en: 'Certifications in enterprise technologies' },
   
   // Projects Section
   projectsTitle: { pt: 'Meus Projetos', en: 'My Projects' },
@@ -90,21 +92,21 @@ const timelineData = [
     tech: ['React', 'Node.js', 'TypeScript', 'HTML', 'CSS', 'Git', 'Figma']
   },
   {
-    year: '2025',
-    title: 'timeline2025',
-    description: 'timeline2025Desc',
+    year: '2024',
+    title: 'timelineFreelancer',
+    description: 'timelineFreelancerDesc',
     tech: ['React', 'Node.js', 'TypeScript', 'HTML', 'CSS', 'Git', 'Figma']
   },
   {
-    year: '2025',
-    title: 'timeline2025Alura',
-    description: 'timeline2025AluraDesc',
+    year: '2023',
+    title: 'timeline2023Alura',
+    description: 'timeline2023AluraDesc',
     tech: ['React', 'Node.js', 'TypeScript', 'HTML', 'CSS', 'Git', 'Figma']
   },
   {
-    year: '2025',
-    title: 'timeline2025IBM',
-    description: 'timeline2025IBMDesc',
+    year: '2023',
+    title: 'timeline2023IBM',
+    description: 'timeline2023IBMDesc',
     tech: ['React', 'Node.js', 'TypeScript', 'HTML', 'CSS', 'Git', 'Figma']
   }
 ];
@@ -531,7 +533,7 @@ function App() {
               
               <div className="contact-item">
                 <Mail className="contact-icon" />
-                <span>Porto Alegre - 90810-150</span>
+                <span>Porto Alegre</span>
               </div>
               
               <div className="contact-item">
