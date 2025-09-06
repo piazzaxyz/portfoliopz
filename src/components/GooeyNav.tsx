@@ -16,6 +16,7 @@ interface GooeyNavProps {
   colors?: number[];
   initialActiveIndex?: number;
   onItemClick?: (index: number, item: NavItem) => void;
+  activeSection?: string;
 }
 
 const GooeyNav: React.FC<GooeyNavProps> = ({
@@ -27,7 +28,8 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
   timeVariance = 300,
   colors = [1, 2, 3, 1, 2, 3, 1, 4],
   initialActiveIndex = 0,
-  onItemClick
+  onItemClick,
+  activeSection
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLUListElement>(null);
@@ -152,6 +154,16 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
       }
     }
   };
+
+  useEffect(() => {
+    // Atualizar activeIndex baseado na activeSection
+    if (activeSection) {
+      const sectionIndex = items.findIndex(item => item.href === `#${activeSection}`);
+      if (sectionIndex !== -1 && sectionIndex !== activeIndex) {
+        setActiveIndex(sectionIndex);
+      }
+    }
+  }, [activeSection, items, activeIndex]);
 
   useEffect(() => {
     if (!navRef.current || !containerRef.current) return;

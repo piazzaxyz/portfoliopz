@@ -39,6 +39,8 @@ const translations: Translations = {
   timelineTitle: { pt: 'Minha Jornada', en: 'My Journey' },
   timeline2024: { pt: 'Desenvolvedor Full Stack', en: 'Full Stack Developer' },
   timeline2024Desc: { pt: 'Criação de sites e aplicações web', en: 'Creating websites and web applications' },
+  timelineIntern: { pt: 'Estagiário FrontEnd', en: 'FrontEnd Intern' },
+  timelineInternDesc: { pt: 'Desenvolvimento de interfaces modernas e responsivas', en: 'Development of modern and responsive interfaces' },
   timeline2023Alura: { pt: 'Certificações ALURA', en: 'ALURA Certifications' },
   timeline2023AluraDesc: { pt: 'Especialização em desenvolvimento web', en: 'Specialization in web development' },
   timeline2023IBM: { pt: 'Curso IBM', en: 'IBM Course' },
@@ -85,19 +87,25 @@ const timelineData = [
     year: '2025',
     title: 'timeline2024',
     description: 'timeline2024Desc',
-    tech: ['React', 'Node.js', 'TypeScript']
+    tech: ['React', 'Node.js', 'TypeScript', 'HTML', 'CSS', 'Git', 'Figma']
+  },
+  {
+    year: '2024',
+    title: 'timelineIntern',
+    description: 'timelineInternDesc',
+    tech: ['React', 'Node.js', 'TypeScript', 'HTML', 'CSS', 'Git', 'Figma']
   },
   {
     year: '2025',
     title: 'timeline2023Alura',
     description: 'timeline2023AluraDesc',
-    tech: ['HTML', 'CSS', 'JavaScript', 'Java', 'Git']
+    tech: ['React', 'Node.js', 'TypeScript', 'HTML', 'CSS', 'Git', 'Figma']
   },
   {
     year: '2025',
     title: 'timeline2023IBM',
     description: 'timeline2023IBMDesc',
-    tech: ['Lógica', 'JavaScript']
+    tech: ['React', 'Node.js', 'TypeScript', 'HTML', 'CSS', 'Git', 'Figma']
   }
 ];
 
@@ -191,12 +199,29 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       setScrollY(currentScrollY);
       setShowScrollToTop(currentScrollY > 400);
+      
+      // Detectar seção ativa baseada no scroll
+      const sections = ['home', 'about', 'skills', 'timeline', 'projects', 'contact'];
+      const sectionElements = sections.map(id => document.getElementById(id));
+      
+      let currentSection = 'home';
+      sectionElements.forEach((element, index) => {
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            currentSection = sections[index];
+          }
+        }
+      });
+      
+      setActiveSection(currentSection);
     };
     
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -232,6 +257,7 @@ function App() {
   const handleNavClick = (_: number, item: { label: string; href: string }) => {
     const sectionId = item.href.replace('#', '');
     scrollToSection(sectionId);
+    setActiveSection(sectionId);
   };
 
   const scrollToTop = () => {
@@ -308,6 +334,7 @@ function App() {
                 particleR={85}
                 animationTime={450}
                 timeVariance={250}
+                activeSection={activeSection}
               />
             </div>
           </div>
