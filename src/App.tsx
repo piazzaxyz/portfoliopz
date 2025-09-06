@@ -23,7 +23,7 @@ const translations: Translations = {
   
   // Hero Section
   heroTitle: { pt: 'Eduardo Piazza', en: 'Eduardo Piazza' },
-  heroSubtitle: { pt: 'Desenvolvedor Full Stack', en: 'Full Stack Developer' },
+  heroSubtitle: { pt: 'Desenvolvedor Full-Stack', en: 'Full-Stack Developer' },
   heroDescription: { pt: 'Transformando ideias em experiências digitais incríveis', en: 'Transforming ideas into incredible digital experiences' },
   heroButton: { pt: 'Vamos conversar?', en: 'Let\'s talk?' },
   
